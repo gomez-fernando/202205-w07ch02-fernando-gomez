@@ -1,0 +1,19 @@
+{
+    "cosas":[
+        {
+            "id": 1,
+            "name": "Coger el metro",
+            "prioridad": "alta"
+        },
+        {
+            "id": 2,
+            "name": "Crear un repo",
+            "prioridad": "media"
+        },
+        {
+            "id": 1,
+            "name": "Enlazar a netlify",
+            "prioridad": "baja"
+        }
+    ]
+}
