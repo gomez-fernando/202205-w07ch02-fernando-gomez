@@ -1,7 +1,7 @@
 {
     "cosas": [
-        { "id": 2, "name": "Crear un repo", "prioridad": "media" },
-        { "id": 3, "name": "Enlazar a netlify", "prioridad": "baja" },
-        { "id": 4, "name": "Enlazar a netlify", "prioridad": "baja" }
+        { "id": 2, "name": "updated", "prioridad": "baja" },
+        { "id": 3, "name": "updated", "prioridad": "baja" },
+        { "id": 5, "name": "new", "prioridad": "baja" }
     ]
 }

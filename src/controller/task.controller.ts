@@ -8,6 +8,7 @@ const res =  JSON.parse( await fs.readFile(dataFilePath, {
 
 }));
 
+
 let array = res.cosas;
 
 export const getController =  async (req: Request, resp: Response) => {
@@ -38,11 +39,9 @@ export const postController = async (req: Request, resp: Response) => {
 
     array.push(newTask);
 
-    const newContent = {
-        cosas: array
-    }
+    res.cosas = array;
 
-    await fs.writeFile(dataFilePath, JSON.stringify(newContent));
+    await fs.writeFile(dataFilePath, JSON.stringify(res));
     
     resp.setHeader('Content-type', 'application/json');
     resp.status(201);
@@ -50,10 +49,9 @@ export const postController = async (req: Request, resp: Response) => {
 }
 
 export const patchController = async (req: Request, resp: Response) => {
-    let tasks: any[] = [];
     let newTask = {};
 
-    tasks = array.map((task: any) => {
+    array = array.map((task: any) => {
         if (task.id === +req.params.id) {
             newTask = { ...task, ...req.body };
             return newTask;
@@ -61,11 +59,9 @@ export const patchController = async (req: Request, resp: Response) => {
             return task;
         }
     });
-    const newContent = {
-        cosas: tasks
-    }
+    res.cosas = array;
 
-    await fs.writeFile(dataFilePath, JSON.stringify(newContent));
+    await fs.writeFile(dataFilePath, JSON.stringify(res));
     resp.setHeader('Content-type', 'application/json');
     resp.end(JSON.stringify(newTask));
 }
