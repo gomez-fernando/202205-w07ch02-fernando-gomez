@@ -1,17 +1,13 @@
 import { Request, Response } from 'express';
 import fs from 'fs/promises';
 
-// const tasks: Array<any> = [];
 const dataFilePath: string = './data/data.json';
-
-// console.log(result);
 
 export const getController =  async (req: Request, resp: Response) => {
     req;
     const result = await fs.readFile(dataFilePath, {
         encoding: 'utf-8',
     })
-    console.log(JSON.parse(result).cosas);
     resp.setHeader('Content-type', 'application/json');
     resp.end(result);
 };
@@ -24,7 +20,6 @@ export const getIdController = async (req: Request, resp: Response) => {
     }));
     const res1 = res.cosas;
     const result = res1.find((item: any) => item.id === +req.params.id)
-    console.log(result);
     resp.setHeader('Content-type', 'application/json');
 
     if (result) {
@@ -41,14 +36,66 @@ export const postController = async (req: Request, resp: Response) => {
     
     }));
     let array = res.cosas;
-    console.log(array);
-    array.push(req.body);
-    console.log(array);
+    console.log('body: ' + req.body);
 
-    await fs.writeFile(dataFilePath, JSON.stringify(array));
+    const newTask = { ...req.body, id: array[array.length - 1].id + 1 };
+
+    array.push(newTask);
+
+    const newContent = {
+        cosas: array
+    }
+
+    await fs.writeFile(dataFilePath, JSON.stringify(newContent));
     
-    // tasks.push(newTask);
     resp.setHeader('Content-type', 'application/json');
     resp.status(201);
-    // resp.end(JSON.stringify(newTask));
+    resp.end(JSON.stringify(newTask));
+}
+
+export const patchController = async (req: Request, resp: Response) => {
+    const res =  JSON.parse( await fs.readFile(dataFilePath, {
+        encoding: 'utf-8'
+    
+    }));
+    let array = res.cosas;
+
+    let tasks: any[] = [];
+    let newTask = {};
+
+    tasks = array.map((task: any) => {
+        if (task.id === +req.params.id) {
+            newTask = { ...task, ...req.body };
+            return newTask;
+        } else {
+            return task;
+        }
+    });
+    const newContent = {
+        cosas: tasks
+    }
+
+    await fs.writeFile(dataFilePath, JSON.stringify(newContent));
+    resp.setHeader('Content-type', 'application/json');
+    resp.end(JSON.stringify(newTask));
+}
+
+export const deleteController = async (req: Request, resp: Response) => {
+    const res =  JSON.parse( await fs.readFile(dataFilePath, {
+        encoding: 'utf-8'
+    
+    }));
+
+    let array = res.cosas;
+    const prevLength = array.length;
+
+    array = array.filter((task: any) => task.id !== +req.params.id);
+    const newContent = {
+        cosas: array
+    }
+
+    await fs.writeFile(dataFilePath, JSON.stringify(newContent));
+
+    resp.status(prevLength === array.length ? 404 : 202);
+    resp.end(JSON.stringify({}));
 }
