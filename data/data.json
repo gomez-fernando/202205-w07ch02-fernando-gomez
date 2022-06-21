@@ -1,1 +1,7 @@
-{"cosas":[{"id":3,"name":"Enlazar a netlify","prioridad":"baja"},{"id":4,"name":"tururur","prioridad":"baja"},{"id":5,"name":"tururur","prioridad":"baja"},{"id":6,"name":"tururur","prioridad":"baja"}]}
+{
+    "cosas": [
+        { "id": 2, "name": "Crear un repo", "prioridad": "media" },
+        { "id": 3, "name": "Enlazar a netlify", "prioridad": "baja" },
+        { "id": 4, "name": "Enlazar a netlify", "prioridad": "baja" }
+    ]
+}

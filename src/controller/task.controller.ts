@@ -3,6 +3,13 @@ import fs from 'fs/promises';
 
 const dataFilePath: string = './data/data.json';
 
+const res =  JSON.parse( await fs.readFile(dataFilePath, {
+    encoding: 'utf-8'
+
+}));
+
+let array = res.cosas;
+
 export const getController =  async (req: Request, resp: Response) => {
     req;
     const result = await fs.readFile(dataFilePath, {
@@ -13,13 +20,7 @@ export const getController =  async (req: Request, resp: Response) => {
 };
 
 export const getIdController = async (req: Request, resp: Response) => {
-    
-    const res =  JSON.parse( await fs.readFile(dataFilePath, {
-        encoding: 'utf-8'
-    
-    }));
-    const res1 = res.cosas;
-    const result = res1.find((item: any) => item.id === +req.params.id)
+    const result = array.find((item: any) => item.id === +req.params.id)
     resp.setHeader('Content-type', 'application/json');
 
     if (result) {
@@ -31,11 +32,6 @@ export const getIdController = async (req: Request, resp: Response) => {
 };
 
 export const postController = async (req: Request, resp: Response) => {
-    const res =  JSON.parse( await fs.readFile(dataFilePath, {
-        encoding: 'utf-8'
-    
-    }));
-    let array = res.cosas;
     console.log('body: ' + req.body);
 
     const newTask = { ...req.body, id: array[array.length - 1].id + 1 };
@@ -54,12 +50,6 @@ export const postController = async (req: Request, resp: Response) => {
 }
 
 export const patchController = async (req: Request, resp: Response) => {
-    const res =  JSON.parse( await fs.readFile(dataFilePath, {
-        encoding: 'utf-8'
-    
-    }));
-    let array = res.cosas;
-
     let tasks: any[] = [];
     let newTask = {};
 
@@ -81,12 +71,6 @@ export const patchController = async (req: Request, resp: Response) => {
 }
 
 export const deleteController = async (req: Request, resp: Response) => {
-    const res =  JSON.parse( await fs.readFile(dataFilePath, {
-        encoding: 'utf-8'
-    
-    }));
-
-    let array = res.cosas;
     const prevLength = array.length;
 
     array = array.filter((task: any) => task.id !== +req.params.id);
