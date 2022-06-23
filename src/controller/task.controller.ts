@@ -3,13 +3,13 @@ import fs from 'fs/promises';
 
 const dataFilePath: string = './data/data.json';
 
-const res =  JSON.parse( await fs.readFile(dataFilePath, {
-    encoding: 'utf-8'
+// const  res =  JSON.parse( await fs.readFile(dataFilePath, {
+//     encoding: 'utf-8'
 
-}));
+// }));
+// console.log(res);
 
-
-let array = res.cosas;
+// let array = res.cosas;
 
 export const getController =  async (req: Request, resp: Response) => {
     req;
