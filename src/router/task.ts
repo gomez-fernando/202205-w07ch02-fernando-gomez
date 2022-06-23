@@ -4,7 +4,7 @@ import { deleteController, getController, getIdController, patchController, post
 export const taskRouter = Router();
 
 
-taskRouter.get('/', getController);
+export default taskRouter.get('/', getController);
 
 taskRouter.get('/:id', getIdController);
 
